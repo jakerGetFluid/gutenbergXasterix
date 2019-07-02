@@ -22,6 +22,17 @@
 
         $(document).foundation(); // Foundation JavaScript
         
+        if ($('.slider').length) {
+          $('.slider').each(function(index, el) {
+            $(this).slick({
+              dots: true,
+              infinite: true,
+              speed: 300,
+              slidesToShow: 1,
+              adaptiveHeight: true
+            });
+          });
+        }
       },
       finalize: function() {
         // JavaScript to be fired on all pages, after page specific JS is fired
