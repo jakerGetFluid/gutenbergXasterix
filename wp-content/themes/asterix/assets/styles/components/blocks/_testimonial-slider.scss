@@ -1,0 +1,22 @@
+blockquote.testimonial {
+  margin: 0;
+  padding: 2rem;
+  font-family: 'Noto Serif';
+  > p {
+    margin-top: 0;
+    color: inherit;
+    font-size: 18px;
+  }
+  cite {
+    color: inherit;
+    font-size: 16px;
+    img {
+      display: inline-block;
+      max-width: 40px;
+      max-height: 40px;
+      border-radius: 50%;
+      vertical-align: middle;
+      margin-right: 4px;
+    }
+  }
+}

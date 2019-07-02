@@ -30,10 +30,39 @@ unset($file, $filepath);
 
 // Admin stylesheet
 function load_custom_wp_admin_style() {
-    wp_register_style( 'custom_wp_admin_css', get_template_directory_uri() . '/assets/styles/css/admin-style.css', false, '1.0.0' );
-    wp_enqueue_style( 'custom_wp_admin_css' );
+  wp_register_style('custom_wp_admin_css', get_template_directory_uri() . '/dist/styles/admin.css', false, '1.0.0');
+  wp_enqueue_style('custom_wp_admin_css');
 }
-add_action( 'admin_enqueue_scripts', 'load_custom_wp_admin_style' );
+add_action('admin_enqueue_scripts', 'load_custom_wp_admin_style');
+
+// init custom gute block
+add_action('acf/init', 'my_acf_init');
+function my_acf_init() {
+  // check function exists
+  if( function_exists('acf_register_block') ) {
+    // register a testimonial block
+    acf_register_block(array(
+      'name'        => 'testimonial',
+      'title'       => __('Testimonial'),
+      'description'   => __('A custom testimonial block.'),
+      'render_callback' => 'my_acf_block_render_callback',
+      'category'      => 'common',
+      'icon'        => 'admin-comments',
+      'keywords'      => array( 'testimonial', 'quote' ),
+    ));
+  }
+}
+
+// call block templates
+function my_acf_block_render_callback($block) {
+  // convert name ("acf/testimonial") into path friendly slug ("testimonial")
+  $slug = str_replace('acf/', '', $block['name']);
+  
+  // include a template part from within the "template-parts/block" folder
+  if(file_exists(get_theme_file_path("/templates/block/content-{$slug}.php"))) {
+    include(get_theme_file_path("/templates/block/content-{$slug}.php"));
+  }
+}
 
 
 // ********************
